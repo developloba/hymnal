@@ -5,4 +5,4 @@ This is definitely not the final name 😂
 ## Getting Started
 
 This project is supposed to be the frontend for a really cool hymn app made with flutter.
-https://media3.giphy.com/media/BpGWitbFZflfSUYuZ9/200.webp?cid=ecf05e4734t9b226jkpjklt8v6xp4ybsu0kk15wnhl1p2wjf&rid=200.webp&ct=g
+![cute dwight](https://user-images.githubusercontent.com/95104961/198826587-e34e5c8e-85c2-4ed5-81ec-d9e4567c1ce9.gif)
