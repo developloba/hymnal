@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal/utils/constant.dart';
+import 'package:hymnal/ui/utils/constant.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});

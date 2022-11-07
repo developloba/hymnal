@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hymnal/screens/Library.dart';
-import 'package:hymnal/screens/home.dart';
-import 'package:hymnal/screens/search.dart';
-import 'package:hymnal/screens/setting.dart';
+import 'package:hymnal/ui/screens/Library.dart';
+import 'package:hymnal/ui/screens/home.dart';
+import 'package:hymnal/ui/screens/search.dart';
+import 'package:hymnal/ui/screens/setting.dart';
 
 class Back extends StatefulWidget {
   const Back({super.key});

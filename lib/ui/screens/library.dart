@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal/screens/grids.dart';
-import 'package:hymnal/utils/carouselmanager.dart';
-import 'package:hymnal/utils/constant.dart';
+import 'package:hymnal/ui/screens/grids.dart';
+import 'package:hymnal/ui/utils/carouselmanager.dart';
+import 'package:hymnal/ui/utils/constant.dart';
 
 class Lib extends StatefulWidget {
   const Lib({super.key});

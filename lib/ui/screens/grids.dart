@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal/utils/carouselmanager.dart';
+import 'package:hymnal/ui/utils/carouselmanager.dart';
 
 import '../utils/constant.dart';
 

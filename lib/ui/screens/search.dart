@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hymnal/components/searchfield.dart';
-import 'package:hymnal/screens/grids.dart';
-import 'package:hymnal/utils/carouselmanager.dart';
-import 'package:hymnal/utils/constant.dart';
+import 'package:hymnal/ui/components/searchfield.dart';
+import 'package:hymnal/ui/screens/grids.dart';
+import 'package:hymnal/ui/utils/carouselmanager.dart';
+import 'package:hymnal/ui/utils/constant.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});

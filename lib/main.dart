@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal/utils/constant.dart';
-import 'package:hymnal/screens/scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hymnal/bloc/fontbloc.dart';
+import 'package:hymnal/ui/screens/hymn.dart';
+import 'package:hymnal/ui/utils/constant.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,10 @@ class MyApp extends StatelessWidget {
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide),
         primarySwatch: Colors.blue,
       ),
-      home: const Back(),
+      home: BlocProvider(
+        create: (context) => Fontbloc(),
+        child: const Scaffold(body: Hymn()),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
