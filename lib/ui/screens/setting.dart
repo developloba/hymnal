@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal/ui/utils/constant.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hymnal/bloc/themebloc.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -9,13 +10,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  List<String> settings = [
-    'Edit Profile',
-    'Favourites',
-    'Preferences',
-    'Theme',
-    'Log out',
-  ];
+  List<bool> selected = [true, false];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,7 +41,7 @@ class _SettingsState extends State<Settings> {
                   child: Text(
                     'Sarah Fitzelburger',
                     textAlign: TextAlign.start,
-                    style: ktitleblack,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                 ),
                 SizedBox(
@@ -58,33 +54,69 @@ class _SettingsState extends State<Settings> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 30),
-                        child: SizedBox(
-                          height: 500,
-                          child: ListView.builder(
-                              itemCount: settings.length,
-                              itemBuilder: ((context, index) => Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            height: 50,
-                                            child: Text(
-                                              settings[index],
-                                              style: kbody,
-                                            ),
-                                          ),
-                                          const Icon(Icons.arrow_forward_ios)
-                                        ],
-                                      ),
-                                      const Divider()
-                                    ],
-                                  ))),
-                        ),
-                      ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 30),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Settingtile(
+                                label: 'Edit Profile',
+                              ),
+                              const Settingtile(
+                                label: 'Favorites',
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Preferences',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  ToggleButtons(
+                                      isSelected: selected,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      selectedColor: Colors.white,
+                                      fillColor: Colors.grey,
+                                      color: Colors.grey,
+                                      onPressed: ((index) {
+                                        setState(() {
+                                          selected[index] = !selected[index];
+                                          if (index == 0 && selected[index]) {
+                                            BlocProvider.of<Themebloc>(context)
+                                                .add(Lightmode());
+                                            selected[index + 1] = false;
+                                          } else if (index == 0 &&
+                                              !selected[index]) {
+                                            BlocProvider.of<Themebloc>(context)
+                                                .add(Darkmode());
+                                            selected[index + 1] = true;
+                                          }
+                                          if (index == 1 && selected[index]) {
+                                            BlocProvider.of<Themebloc>(context)
+                                                .add(Darkmode());
+                                            selected[index - 1] = false;
+                                          } else if (index == 1 &&
+                                              !selected[index]) {
+                                            BlocProvider.of<Themebloc>(context)
+                                                .add(Lightmode());
+                                            selected[index - 1] = true;
+                                          }
+                                        });
+                                      }),
+                                      children: const [
+                                        Icon(Icons.light_mode),
+                                        Icon(Icons.dark_mode)
+                                      ]),
+                                ],
+                              ),
+                              const Settingtile(
+                                label: 'Log out',
+                              )
+                            ],
+                          )),
                     ))
               ],
             ),
@@ -92,5 +124,29 @@ class _SettingsState extends State<Settings> {
         )
       ],
     ));
+  }
+}
+
+class Settingtile extends StatelessWidget {
+  const Settingtile({Key? key, required this.label}) : super(key: key);
+  final String label;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          height: 50,
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        Icon(
+          Icons.arrow_forward_ios,
+          color: Theme.of(context).primaryColor,
+        )
+      ],
+    );
   }
 }

@@ -3,14 +3,22 @@ import 'package:flutter/material.dart';
 
 class Colorbloc extends Bloc<Colorevent, Modecolor> {
   Colorbloc()
-      : super(
-            Modecolor(backgroundcolor: Colors.white, textcolor: Colors.black)) {
+      : super(Modecolor(
+            backgroundcolor: Colors.white,
+            textcolor: Colors.black,
+            darktheme: false)) {
     on<Lightmode>((event, emit) =>
         state ==
-        Modecolor(backgroundcolor: Colors.white, textcolor: Colors.black));
+        Modecolor(
+            backgroundcolor: Colors.white,
+            textcolor: Colors.black,
+            darktheme: false));
     on<Darkmode>((event, emit) =>
         state ==
-        Modecolor(backgroundcolor: Colors.black, textcolor: Colors.white));
+        Modecolor(
+            backgroundcolor: Colors.black,
+            textcolor: Colors.white,
+            darktheme: true));
   }
 }
 
@@ -23,5 +31,9 @@ class Darkmode extends Colorevent {}
 class Modecolor {
   late Color textcolor;
   late Color backgroundcolor;
-  Modecolor({required this.backgroundcolor, required this.textcolor});
+  late bool darktheme;
+  Modecolor(
+      {required this.backgroundcolor,
+      required this.textcolor,
+      required this.darktheme});
 }

@@ -34,19 +34,20 @@ class _HomeState extends State<Home> {
                             Icons.notifications,
                             color: Colors.grey,
                             size: 40,
-                          )
+                          ),
                         ],
                       ),
                       Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 30),
+                            padding: const EdgeInsets.only(top: 40, bottom: 20),
                             child: SizedBox(
                                 width: 400,
                                 child: Text(
                                   'Welcome back, Sis. Sarah👋',
                                   textAlign: TextAlign.start,
-                                  style: ktitleblack,
+                                  style:
+                                      Theme.of(context).textTheme.headlineLarge,
                                 )),
                           ),
                         ],
@@ -56,10 +57,8 @@ class _HomeState extends State<Home> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Today's Selections",
-                              style: kbodygrey,
-                            ),
+                            Text("Today's Selections",
+                                style: Theme.of(context).textTheme.bodySmall),
                             ElevatedButton(
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
@@ -84,7 +83,7 @@ class _HomeState extends State<Home> {
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: Divider(
-                    thickness: 10,
+                    thickness: 5,
                   ),
                 ),
                 Padding(
@@ -98,9 +97,12 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               "Based on what you've viewed",
-                              style: kbody,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
-                            const Icon(Icons.arrow_forward_ios_rounded)
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Theme.of(context).primaryColor,
+                            )
                           ],
                         ),
                       ),
@@ -131,7 +133,9 @@ class _HomeState extends State<Home> {
                                       ),
                                       Text(
                                         carousel.title[index],
-                                        style: kbody,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
                                       ),
                                       Text(
                                         carousel.artists[index],

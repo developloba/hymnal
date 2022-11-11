@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
 
-import '../utils/constant.dart';
-
 class Songgrid extends StatelessWidget {
   const Songgrid(
       {Key? key,
@@ -39,11 +37,11 @@ class Songgrid extends StatelessWidget {
               ),
               Text(
                 carousel.title[index],
-                style: kbodysmall,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Text(
                 carousel.artists[index],
-                style: kbodygreysmall,
+                style: Theme.of(context).textTheme.labelSmall,
               )
             ],
           ),

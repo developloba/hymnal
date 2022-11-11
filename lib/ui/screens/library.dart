@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hymnal/ui/screens/grids.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
-import 'package:hymnal/ui/utils/constant.dart';
 
 class Lib extends StatefulWidget {
   const Lib({super.key});
@@ -43,7 +42,7 @@ class _LibState extends State<Lib> {
                             child: Text(
                               'Here are all your saved songs',
                               textAlign: TextAlign.start,
-                              style: ktitleblack,
+                              style: Theme.of(context).textTheme.headlineLarge,
                             )),
                       ),
                     ],

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hymnal/ui/components/searchfield.dart';
 import 'package:hymnal/ui/screens/grids.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
-import 'package:hymnal/ui/utils/constant.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -28,7 +27,7 @@ class _SearchState extends State<Search> {
                   child: Text(
                     'Search',
                     textAlign: TextAlign.start,
-                    style: ktitleblack,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                 ),
                 const Padding(

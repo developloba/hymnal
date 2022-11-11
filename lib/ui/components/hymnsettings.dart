@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hymnal/bloc/colorbloc.dart';
 import 'package:hymnal/bloc/fontbloc.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({
+class Hymnsettings extends StatelessWidget {
+  const Hymnsettings({
     Key? key,
   }) : super(key: key);
 
@@ -63,22 +64,30 @@ class Settings extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.white),
+                TextButton(
+                  onPressed: (() =>
+                      BlocProvider.of<Colorbloc>(context).add(Lightmode())),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.white),
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.black),
+                TextButton(
+                  onPressed: (() =>
+                      BlocProvider.of<Colorbloc>(context).add(Darkmode())),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.black),
+                    ),
                   ),
                 )
               ],

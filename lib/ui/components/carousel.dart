@@ -42,7 +42,7 @@ class Selections extends StatelessWidget {
                   ),
                   Text(
                     carousel.title[index],
-                    style: kbody,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
                     carousel.artists[index],

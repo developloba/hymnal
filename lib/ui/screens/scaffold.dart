@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hymnal/ui/screens/Library.dart';
 import 'package:hymnal/ui/screens/home.dart';
 import 'package:hymnal/ui/screens/search.dart';
@@ -14,24 +13,19 @@ class Back extends StatefulWidget {
 
 class _BackState extends State<Back> {
   int currentPageIndex = 0;
-  SystemUiOverlayStyle overlayStyle = const SystemUiOverlayStyle(
-      systemNavigationBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.white);
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      SystemChrome.setSystemUIOverlayStyle(overlayStyle);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).backgroundColor,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20),
-        color: Colors.white,
+        color: Theme.of(context).backgroundColor,
         child: NavigationBar(
             onDestinationSelected: (int index) {
               setState(() {
@@ -39,18 +33,30 @@ class _BackState extends State<Back> {
               });
             },
             selectedIndex: currentPageIndex,
-            destinations: const [
+            destinations: [
+              NavigationDestination(
+                icon: Icon(
+                  Icons.home_outlined,
+                  color: Theme.of(context).primaryColor,
+                ),
+                label: 'Home',
+              ),
               NavigationDestination(
                   icon: Icon(
-                    Icons.home_outlined,
+                    Icons.search,
+                    color: Theme.of(context).primaryColor,
                   ),
-                  label: 'Home'),
-              NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
+                  label: 'Search'),
               NavigationDestination(
-                  icon: Icon(Icons.book_outlined), label: 'Library'),
+                  icon: Icon(
+                    Icons.book_outlined,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  label: 'Library'),
               NavigationDestination(
                   icon: Icon(
                     Icons.settings_outlined,
+                    color: Theme.of(context).primaryColor,
                   ),
                   label: 'settings')
             ]),
