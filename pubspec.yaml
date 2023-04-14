@@ -40,7 +40,12 @@ dependencies:
   flutter_native_splash: ^2.2.12
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
-
+  responsive_framework: ^0.2.0
+  http: ^0.13.5
+  equatable: ^2.0.5
+  flutter_spinkit: ^5.1.0
+  searchfield: ^0.7.5
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

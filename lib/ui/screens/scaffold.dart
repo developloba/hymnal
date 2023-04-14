@@ -22,10 +22,10 @@ class _BackState extends State<Back> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: NavigationBar(
             onDestinationSelected: (int index) {
               setState(() {

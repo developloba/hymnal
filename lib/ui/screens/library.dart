@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hymnal/model/hymnmodel.dart';
 import 'package:hymnal/ui/screens/grids.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
 
@@ -15,6 +16,7 @@ class _LibState extends State<Lib> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: CustomScrollView(
+        primary: true,
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
@@ -22,35 +24,27 @@ class _LibState extends State<Lib> {
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.notifications,
-                        color: Colors.grey,
-                        size: 40,
-                      )
-                    ],
-                  ),
-                  Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 40, horizontal: 20),
+                          vertical: 40,
+                        ),
                         child: SizedBox(
-                            width: 500,
                             child: Text(
-                              'Here are all your saved songs',
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headlineLarge,
-                            )),
+                          'Library',
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        )),
                       ),
                     ],
                   ),
                   Songgrid(
                     carousel: carousel,
-                    crosssection: 3,
+                    crosssection: 2,
                     height: 600,
+                    hymnData: [
+                      HymnModel(id: 2, title: 'tite', content: 'content')
+                    ],
                   )
                 ],
               ),

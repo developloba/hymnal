@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hymnal/bloc/colorbloc.dart';
+
 import 'package:hymnal/bloc/fontbloc.dart';
+
+import '../../bloc/themebloc.dart';
 
 class Hymnsettings extends StatelessWidget {
   const Hymnsettings({
@@ -11,7 +13,7 @@ class Hymnsettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 300,
+        height: MediaQuery.of(context).size.height / 3,
         decoration: BoxDecoration(
             color: Colors.grey.shade300,
             borderRadius: const BorderRadius.only(
@@ -19,15 +21,19 @@ class Hymnsettings extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'Reader Preferences',
-              style: TextStyle(fontFamily: 'dm', fontSize: 20),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: Colors.black, fontSize: 35),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: IconButton(
                       onPressed: () {
                         BlocProvider.of<Fontbloc>(context).add(Increase());
@@ -35,21 +41,22 @@ class Hymnsettings extends StatelessWidget {
                       icon: const Icon(
                         Icons.add,
                         size: 50,
+                        color: Colors.black,
                       )),
                 ),
                 BlocBuilder<Fontbloc, double>(
                   builder: (context, state) {
                     return Text(
-                      BlocProvider.of<Fontbloc>(context)
-                          .state
-                          .round()
-                          .toString(),
-                      style: const TextStyle(fontFamily: 'dm', fontSize: 40),
+                      state.round().toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(color: Colors.black),
                     );
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: IconButton(
                       onPressed: () {
                         BlocProvider.of<Fontbloc>(context).add(Decrease());
@@ -57,6 +64,7 @@ class Hymnsettings extends StatelessWidget {
                       icon: const Icon(
                         Icons.remove,
                         size: 50,
+                        color: Colors.black,
                       )),
                 )
               ],
@@ -66,7 +74,7 @@ class Hymnsettings extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: (() =>
-                      BlocProvider.of<Colorbloc>(context).add(Lightmode())),
+                      BlocProvider.of<Themebloc>(context).add(Lightmode())),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
@@ -79,7 +87,7 @@ class Hymnsettings extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: (() =>
-                      BlocProvider.of<Colorbloc>(context).add(Darkmode())),
+                      BlocProvider.of<Themebloc>(context).add(Darkmode())),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(

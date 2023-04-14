@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hymnal/ui/components/searchfield.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hymnal/ui/components/spinkit.dart';
 import 'package:hymnal/ui/screens/grids.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
+
+import '../../bloc/hymnbloc/hymnbloc.dart';
+import '../../bloc/hymnbloc/hymnstate.dart';
+import '../components/searchfield.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -18,7 +23,7 @@ class _SearchState extends State<Search> {
       slivers: [
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -30,17 +35,35 @@ class _SearchState extends State<Search> {
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Searchfield(),
+                BlocBuilder<HymnBloc, HymnState>(
+                  builder: (context, state) {
+                    if (state is LoadedHymn) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: CustomSearchField(
+                          data: state.data,
+                        ),
+                      );
+                    } else {
+                      return const CustomSearchField(
+                        data: [],
+                      );
+                    }
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Songgrid(
-                    carousel: Carouselmanager(),
-                    crosssection: 2,
-                    height: 800,
-                  ),
+                BlocBuilder<HymnBloc, HymnState>(
+                  builder: (context, state) {
+                    if (state is LoadedHymn) {
+                      return Songgrid(
+                        hymnData: state.data,
+                        carousel: Carouselmanager(),
+                        crosssection: 2,
+                        height: 800,
+                      );
+                    } else {
+                      return spinkit;
+                    }
+                  },
                 )
               ],
             ),

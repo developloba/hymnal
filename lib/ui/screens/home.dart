@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hymnal/bloc/hymnbloc/hymnevent.dart';
+import 'package:hymnal/bloc/hymnbloc/hymnstate.dart';
+import 'package:hymnal/ui/components/hymnscreen.dart';
+import 'package:hymnal/ui/components/spinkit.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
-import 'package:hymnal/ui/utils/constant.dart';
 
+import '../../bloc/hymnbloc/hymnbloc.dart';
+import '../../model/hymnmodel.dart';
 import '../components/carousel.dart';
 
 class Home extends StatefulWidget {
@@ -12,6 +18,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    BlocProvider.of<HymnBloc>(context).add(GetHymnEvent());
+    super.initState();
+  }
+
   Carouselmanager carousel = Carouselmanager();
   PageController controls = PageController();
   @override
@@ -27,16 +39,6 @@ class _HomeState extends State<Home> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(
-                            Icons.notifications,
-                            color: Colors.grey,
-                            size: 40,
-                          ),
-                        ],
-                      ),
                       Row(
                         children: [
                           Padding(
@@ -58,9 +60,12 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Today's Selections",
-                                style: Theme.of(context).textTheme.bodySmall),
+                                style: Theme.of(context).textTheme.bodyLarge),
                             ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  BlocProvider.of<HymnBloc>(context)
+                                      .add(GetHymnEvent());
+                                },
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30)),
@@ -106,44 +111,19 @@ class _HomeState extends State<Home> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: SizedBox(
-                          height: 400,
-                          width: 600,
-                          child: PageView.builder(
-                              controller: PageController(viewportFraction: 0.5),
-                              padEnds: false,
-                              itemCount: carousel.carousel.length,
-                              itemBuilder: ((context, index) => Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    color:
-                                        const Color.fromARGB(57, 217, 217, 217),
-                                    elevation: 0,
-                                    child: Column(children: [
-                                      Card(
-                                        elevation: 0,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        clipBehavior: Clip.hardEdge,
-                                        child: carousel.carousel[index],
-                                      ),
-                                      Text(
-                                        carousel.title[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                      ),
-                                      Text(
-                                        carousel.artists[index],
-                                        style: kbodygreysmall,
-                                      )
-                                    ]),
-                                  ))),
-                        ),
+                      BlocBuilder<HymnBloc, HymnState>(
+                        builder: (context, state) {
+                          if (state is LoadedHymn) {
+                            return HymnCarousel(
+                              carousel: carousel,
+                              data: state.data,
+                            );
+                          } else if (state is InitialHymnState) {
+                            return spinkit;
+                          } else {
+                            return const Text('error');
+                          }
+                        },
                       )
                     ],
                   ),
@@ -152,6 +132,65 @@ class _HomeState extends State<Home> {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class HymnCarousel extends StatelessWidget {
+  const HymnCarousel({Key? key, required this.carousel, required this.data})
+      : super(key: key);
+
+  final Carouselmanager carousel;
+  final List<HymnModel> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SizedBox(
+        height: 400,
+        width: 600,
+        child: PageView.builder(
+            controller: PageController(viewportFraction: 0.5),
+            padEnds: false,
+            itemCount: data.length,
+            itemBuilder: ((context, index) => Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50)),
+                  color: const Color.fromARGB(57, 217, 217, 217),
+                  elevation: 0,
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    TextButton(
+                      onPressed: (() {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.background,
+                              body: HymnscreenScaffold(
+                                  backgroundcolor:
+                                      Theme.of(context).colorScheme.background,
+                                  textcolor: Theme.of(context).primaryColor,
+                                  hymnData: data[index]),
+                            ),
+                          ),
+                        );
+                      }),
+                      child: Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50)),
+                        clipBehavior: Clip.hardEdge,
+                        child: carousel.carousel[5],
+                      ),
+                    ),
+                    Text(
+                      data[index].title,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ]),
+                ))),
       ),
     );
   }

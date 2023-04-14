@@ -1,31 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:hymnal/model/hymnmodel.dart';
 import 'package:hymnal/ui/utils/carouselmanager.dart';
 
-class Songgrid extends StatelessWidget {
+import '../components/hymnscreen.dart';
+
+class Songgrid extends StatefulWidget {
   const Songgrid(
       {Key? key,
       required this.carousel,
       required this.crosssection,
-      required this.height})
+      required this.height,
+      required this.hymnData})
       : super(key: key);
 
   final Carouselmanager carousel;
   final int crosssection;
   final double height;
+  final List<HymnModel> hymnData;
+
+  @override
+  State<Songgrid> createState() => _SonggridState();
+}
+
+class _SonggridState extends State<Songgrid> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
+      height: MediaQuery.of(context).size.height,
       child: GridView.builder(
-        itemCount: carousel.carousel.length,
+        itemCount: widget.hymnData.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 0.7,
-            mainAxisSpacing: 20,
-            crossAxisCount: crosssection,
-            crossAxisSpacing: 20),
-        itemBuilder: (context, index) => SizedBox(
-          height: 400,
-          width: 200,
+            childAspectRatio: 0.8,
+            mainAxisSpacing: 3,
+            crossAxisCount: widget.crosssection,
+            crossAxisSpacing: 3),
+        itemBuilder: (context, index) => TextButton(
+          onPressed: (() {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => HymnscreenScaffold(
+                  backgroundcolor: Theme.of(context).colorScheme.background,
+                  textcolor: Theme.of(context).primaryColor,
+                  hymnData: widget.hymnData[index]),
+            ));
+          }),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -33,16 +50,16 @@ class Songgrid extends StatelessWidget {
                 clipBehavior: Clip.hardEdge,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
-                child: carousel.carousel[index],
+                child: widget.carousel.carousel[4],
               ),
               Text(
-                carousel.title[index],
-                style: Theme.of(context).textTheme.bodyMedium,
+                widget.hymnData[index].title,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontSize: 20),
+                overflow: TextOverflow.ellipsis,
               ),
-              Text(
-                carousel.artists[index],
-                style: Theme.of(context).textTheme.labelSmall,
-              )
             ],
           ),
         ),
